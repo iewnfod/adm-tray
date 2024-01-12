@@ -5,7 +5,12 @@ static mut ARIA2C_PROCESS: Option<Child> = None;
 pub fn startup() {
 	let mut cmd = Command::new("aria2c");
 	cmd.arg("--enable-rpc");
-	let process = cmd.spawn().unwrap();
+	let process = match cmd.spawn() {
+		Ok(process) => process,
+		Err(err) => {
+			panic!("{}", err)
+		},
+	};
 	unsafe { ARIA2C_PROCESS = Some(process) };
 }
 
