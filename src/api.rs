@@ -1,5 +1,7 @@
 use std::{process::Command, net::TcpListener};
 
+use futures::executor::block_on;
+
 pub const BASE_URL: &str  = "http://127.0.0.1:63318";
 pub const APP_BIND: &str = "127.0.0.1:63318";
 pub const APP_NAME: &str = "aria-download-manager";
@@ -31,7 +33,7 @@ pub fn open_app() {
 }
 
 pub fn quit_app() {
-	tokio::spawn(
-		reqwest::get(format!("{}/quit", BASE_URL))
-	);
+	block_on(
+		reqwest::Client::new().get(format!("{}/quit", BASE_URL)).send()
+	).unwrap();
 }
