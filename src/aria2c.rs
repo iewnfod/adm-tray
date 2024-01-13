@@ -1,17 +1,23 @@
-use std::process::{Command, Child};
+use std::{process::{Command, Child}, path::Path};
+
+const ARIA2C_PATH: &str = "/opt/homebrew/bin/aria2c";
 
 static mut ARIA2C_PROCESS: Option<Child> = None;
 
 pub fn startup() {
-	let mut cmd = Command::new("aria2c");
-	cmd.arg("--enable-rpc");
-	let process = match cmd.spawn() {
-		Ok(process) => process,
-		Err(err) => {
-			panic!("{}", err)
-		},
-	};
-	unsafe { ARIA2C_PROCESS = Some(process) };
+	if Path::new(ARIA2C_PATH).exists() {
+		let mut cmd = Command::new(ARIA2C_PATH);
+		cmd.arg("--enable-rpc");
+		let process = match cmd.spawn() {
+			Ok(process) => process,
+			Err(err) => {
+				panic!("{}", err)
+			},
+		};
+		unsafe { ARIA2C_PROCESS = Some(process) };
+	} else {
+		println!("Cannot find aria2c");
+	}
 }
 
 pub fn stop() {
