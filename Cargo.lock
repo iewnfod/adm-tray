@@ -202,6 +202,7 @@ version = "0.1.0"
 dependencies = [
  "actix-web",
  "futures",
+ "lazy_mut",
  "reqwest",
  "serde",
  "tokio",
@@ -875,6 +876,15 @@ name = "language-tags"
 version = "0.3.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d4345964bb142484797b161f473a503a434de77149dd8c7427788c6e13379388"
+
+[[package]]
+name = "lazy_mut"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "767a23ea51ed54e6a9cd2a6d0fe156feb4934a4d95e585b55f4585577e195a5b"
+dependencies = [
+ "libc",
+]
 
 [[package]]
 name = "lazy_static"
