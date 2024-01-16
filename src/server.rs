@@ -5,13 +5,30 @@ use serde::{Serialize, Deserialize};
 
 use crate::api;
 
-#[derive(Debug, Serialize, Deserialize)]
-struct Info {
-	download_id: usize,
-	size: usize,
-	webpage_url: String,
-	download_url: String,
-	resume_state: bool,
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Info {
+	pub download_id: usize,
+	pub size: usize,
+	pub webpage_url: String,
+	pub download_url: String,
+	pub resume_state: bool,
+	pub download_cookie: Vec<Cookie>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Cookie {
+	domain: String,
+	host_only: bool,
+	http_only: bool,
+	name: String,
+	path: String,
+	same_site: String,
+	secure: bool,
+	session: bool,
+	store_id: String,
+	value: String,
 }
 
 async fn index(data: web::Json<Info>) -> actix_web::Result<String> {
