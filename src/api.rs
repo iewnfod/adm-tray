@@ -1,5 +1,7 @@
 use std::{process::Command, net::TcpListener, path::PathBuf};
 
+use futures::executor::block_on;
+
 pub const BASE_URL: &str  = "http://127.0.0.1:63318";
 pub const APP_BIND: &str = "127.0.0.1:63318";
 pub const APP_NAME: &str = "aria-download-manager";
@@ -17,7 +19,10 @@ pub fn get_env() -> PathBuf {
 
 pub fn open_app() {
 	if is_opened() {
-		println!("Has Opened");
+		println!("Try to Focus");
+		block_on(
+			reqwest::get(format!("{}/focus", BASE_URL))
+		).unwrap();
 		return;
 	}
 	let app_path = get_env().join(APP_NAME);
