@@ -14,6 +14,7 @@ pub struct Info {
 	pub download_url: String,
 	pub resume_state: bool,
 	pub download_cookie: Vec<Cookie>,
+	pub download_referer: String,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
